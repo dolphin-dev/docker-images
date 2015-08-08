@@ -2,21 +2,21 @@
 
 このリポジトリで作成したイメージは Docker Hub に公開しています。下記手順でインストールと起動を行うことができます。
 
-### サーバーとなるマシンに docker をインストール
+#### サーバーとなるマシンに docker をインストール
 * CentOS7/Ubntuの場合　yum install 等のパッケージコマンドが利用できます。
 * Windows/Macの場合　Boot2Docker を使用します。（インストールパーッケージがあります。）
 
-### データベースの Postgres をインストール
+#### データベースの Postgres をインストール
 docker run --name dolphin-db -d dolphindev/postgres
 
-### アプリケーションサーバーの WildFly をインストール
+#### アプリケーションサーバーの WildFly をインストール
 docker run --name dolphin-server --link dolphin-db:ds -p 8080:8080 -d dolphindev/wildfly
 
 コマンドは１行です。正確に入力してください（コピーペーストが確実です）。
 最初のインストールと起動には少し時間がかかります。
 上記コマンドが成功するとサーバーがバックグランドで動いています。
 
-### サーバーのIPアドレスを調査
+#### サーバーのIPアドレスを調査
 * クライアントと接続するため、サーバのIPアドレスを調べます。
 * Linuxの場合　　インストールしたマシンのIPアドレス
 * Windows/Macの場合  boot2docker ip コマンドが返す値
@@ -25,7 +25,7 @@ docker run --name dolphin-server --link dolphin-db:ds -p 8080:8080 -d dolphindev
 
 ********************
 
-### クライアントから接続
+#### クライアントから接続
 * クライアントマシン(Windows/Mac)に最新の Java8 実行環境をインストールしてください。
 * [ここから](http://www.digital-globe.co.jp/openDolphin/sys-guide/26/client/OpenDolphin.zip) クライアントプログラムをダウンロードします。
 * クライアントプログラムは ZIP 形式になっています。下記 Tips を参照し、OpenDolphinを起動してください。
@@ -37,7 +37,7 @@ docker run --name dolphin-server --link dolphin-db:ds -p 8080:8080 -d dolphindev
 * 設定を保存するとログイン画面に戻ります。
 * パスワードに admin を入力し、ログインボタンを押します。
 
-### Tips 解凍とクライアント起動
+#### Tips 解凍とクライアント起動
 * Windows
   - ダウンロードしたファイルを右クリック、メニューの全て展開(T)...を選択
   - 参照ボタンを押し、展開先にデスクトップを選択
@@ -53,14 +53,14 @@ ORCAと接続し、患者受付を行う必要があります。ファイルメ�
 
 ***********************
 
-### サーバーの停止
+#### サーバーの停止
 * WildFlyを停止
  	- コントロールキーと英語のcキーを同時に押します 。
 * Postgresを停止
  	- docker stop dolphin-db
 
 
-### ２回目からのサーバー起動
+#### ２回目からのサーバー起動
 * Postgresを起動
  	- docker start dolphin-db
 * WildFlyを起動
@@ -68,7 +68,7 @@ ORCAと接続し、患者受付を行う必要があります。ファイルメ�
 
 ***********************
 
-### WildFlyをフォアグランドで実行する
+#### WildFlyをフォアグランドで実行する
 上記はWildFlyをバックグランドで実行するため、起動の失敗や接続トラブルがあった場合、コンテナに接続しログを見る
 必要があります。次のコマンドで実行すると起動状態がターミナルに流れます。
  * docker run --rm --link dolphin-db:ds -p 8080:8080 -it dolphindev/wildfly
@@ -78,7 +78,7 @@ ORCAと接続し、患者受付を行う必要があります。ファイルメ�
 
 ***********************
 
-### 既存Postgresサーバーと接続する
+#### 既存Postgresサーバーと接続する
 既にOpenDolphinを運用していて、Postgresサーバーにデータがある場合、WildFly
 コンテナとPostgresデータベースを直接接続することができます。
 * データのバックアップをとってください。
@@ -92,7 +92,7 @@ ORCAと接続し、患者受付を行う必要があります。ファイルメ�
   - docker run --name dolphin-server -e DB_HOST=pg_server_ip -e DB_PORT=5432 -p 8080:8080 -d dolphindev/wildfly
 
 ***********************
-### 次のステップ
+#### 次のステップ
 * ORCAを導入し、OpenDolphinと接続してください。カルテの作成、診療行為の送信ができるようになります。
 * Postgres（dolphin-db）をデータコンテナ化してください。
 * Nginx 等のリバースプロキシーを立てると安全性が向上します。
@@ -101,7 +101,7 @@ ORCAと接続し、患者受付を行う必要があります。ファイルメ�
 拡張を行ってください。またBoot2Dockerが動いているマシン以外からアクセスできるようにするため、
 VirtualBox にポートフォーワードの設定を行ってください。
 
-### 免責事項
+#### 免責事項
 このドキュメントはOpenDolphinの構成を理解していただき、導入を進めていただくための参考になるこを目的として
 います。実際に運用するためには、ここに述べた内容以外にも、特にPostgresと
 JavaEEに関する深い知識と経験が必要です。したがってこのドキュメントとコンテナを使用した場合に、何らかの
