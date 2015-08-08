@@ -22,6 +22,7 @@ docker run --name dolphin-server --link dolphin-db:ds -p 8080:8080 -d dolphindev
 * Windows/Macの場合  boot2docker ip コマンドが返す値
   （左のコマンドを今実行しているターミナルに打ち込みます。一般に 192.168.5９.xxxになります。）
 * 以下、サーバーのIPアドレスを HOST_IP とし次の節で使用します。
+
 ********************
 
 ### クライアントから接続
