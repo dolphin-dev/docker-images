@@ -55,7 +55,7 @@ ORCAと接続し、患者受付を行う必要があります。ファイルメ�
 
 #### サーバーの停止
 * WildFlyを停止
- 	- コントロールキーと英語のcキーを同時に押します 。
+ 	- docker stop dolphin-server
 * Postgresを停止
  	- docker stop dolphin-db
 
