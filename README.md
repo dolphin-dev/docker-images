@@ -1,6 +1,6 @@
 # OpenDolphin Docker
 
-このリポジトリで作成したイメージは Docker Hub に公開しています。下記手順でインストールと起動を行うことができます。
+イメージは Docker Hub に公開しています。下記手順はOpenDolphinサーバーを構築する最も簡単な方法です。
 
 #### サーバーとなるマシンに docker をインストール
 * CentOS7/Ubntuの場合　yum install 等のパッケージコマンドが利用できます。
