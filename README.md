@@ -7,10 +7,10 @@
 * Windows/Macの場合　Docker Toolbox を使用します。（インストールパッケージがあります。）
 
 #### データベースの Postgres をインストール
-docker run --name dolphin-db -d dolphindev/postgres
+    docker run --name dolphin-db -d dolphindev/postgres
 
 #### アプリケーションサーバーの WildFly をインストール
-docker run --name dolphin-server --link dolphin-db:ds -p 8080:8080 -d dolphindev/wildfly
+    docker run --name dolphin-server --link dolphin-db:ds -p 8080:8080 -d dolphindev/wildfly
 
 コマンドは１行です。正確に入力してください。（コピーペーストが確実です。）
 最初のインストールと起動には時間がかかります。
@@ -54,27 +54,35 @@ ORCAと接続し、患者受付を行う必要があります。ファイルメ�
 ***********************
 
 #### サーバーの停止
-* WildFlyを停止
- 	- docker stop dolphin-server
-* Postgresを停止
- 	- docker stop dolphin-db
+（１）WildFlyを停止  
+
+    docker stop dolphin-server
+
+（２）Postgresを停止  
+
+    docker stop dolphin-db
 
 
 #### ２回目からのサーバー起動
-* Postgresを起動
- 	- docker start dolphin-db
-* WildFlyを起動
- 	- docker start dolphin-server
+（１）Postgresを起動  
+
+    docker start dolphin-db
+
+（２）WildFlyを起動  
+
+    docker start dolphin-server
 
 ***********************
 
 #### WildFlyをフォアグランドで実行する
 上記はWildFlyをバックグランドで実行するため、起動の失敗や接続トラブルがあった場合、コンテナに接続しログを見る
-必要があります。次のコマンドで実行すると起動状態がターミナルに流れます。
- * docker run --rm --link dolphin-db:ds -p 8080:8080 -it dolphindev/wildfly
+必要があります。次のコマンドで実行すると起動状態がターミナルに流れます。  
+
+    docker run --rm --link dolphin-db:ds -p 8080:8080 -it dolphindev/wildfly
 
 停止は
- * コントロールキーと英語のcキーを同時に押します。
+
+    コントロールキーと英語のcキーを同時に押します。
 
 ***********************
 
@@ -87,9 +95,11 @@ ORCAと接続し、患者受付を行う必要があります。ファイルメ�
 * postgresql.conf に上記IPアドレスでのリッスンを許可してください。
 * pg_hba.conf にクライアントマシンからの接続を許可してください。
 
-* WildFly コンテナを下記のように起動します。（環境変数でPostgresサーバーのIPアドレスとポート番号を与えます。）
-  - docker rm dolphin-server
-  - docker run --name dolphin-server -e DB_HOST=pg_server_ip -e DB_PORT=5432 -p 8080:8080 -d dolphindev/wildfly
+WildFly コンテナを下記のように起動します。
+（環境変数でPostgresサーバーのIPアドレスとポート番号を与えます。）
+
+    docker rm dolphin-server  
+    docker run --name dolphin-server -e DB_HOST=pg_server_ip -e DB_PORT=5432 -p 8080:8080 -d dolphindev/wildfly
 
 ***********************
 #### 次のステップ
