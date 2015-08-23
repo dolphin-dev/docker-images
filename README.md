@@ -3,27 +3,33 @@
 下記はOpenDolphinサーバーを構築する最も簡単な方法です。コンテナイメージは Docker Hub に公開しています。
 
 #### サーバーとなるマシンに docker をインストール
-* CentOS7/Ubuntuの場合　Docker 公式サイトに手順があります。
+* CentOS7/Ubuntuの場合　Docker の公式サイトに手順があります。
 * Windows/Macの場合　Docker Toolbox を使用します。（インストールパッケージがあります。）
 
 #### Dolphin 用の Postgres と WildFly イメージをインストール
     docker pull dolphindev/postgres
     docker pull dolphindev/wildfly
 
+インストールには時間がかかります。ネットワーク速度の関係でタイムアウトが起きた場合、再度実行してください。
+
 #### 起動
     docker run --name dolphin-db -d dolphindev/postgres
     docker run --name dolphin-server --link dolphin-db:ds -p 8080:8080 -d dolphindev/wildfly
 
 コマンドは１行です。正確に入力してください。（コピーペーストが確実です。）
-最初のインストールには時間がかかります。
-上記コマンドが成功するとサーバーがバックグランドで動いています。
+上記コマンドが成功するとサーバーがバックグラウンドで動いています。
 
 #### サーバーのIPアドレスを調査
-* クライアントと接続するため、サーバのIPアドレスを調べます。
+クライアントと接続するため、サーバのIPアドレスを調べます。
+
 * Linuxの場合　　インストールしたマシンのIPアドレス
-* Windows/Macの場合  docker-machine ip default コマンドが返す値
-  （左のコマンドを今実行しているターミナルに打ち込みます。192.168.99.100等の値が返ります。またdefaultは使用するVirtual Machine名です。）
-* 以下、サーバーのIPアドレスを host_ip とし次の節で使用します。
+* Windows/Macの場合　ターミナルで下記コマンドを実行し、その戻り値を使用します。
+
+````
+docker-machine ip default　（defaultは使用中のマシン名です）
+````
+
+以下、サーバーのIPアドレスを host_ip とし次の節で使用します。
 
 ********************
 
@@ -70,8 +76,8 @@ Postgresを起動 -> WildFlyを起動
 
 ***********************
 
-#### WildFlyをフォアグランドで実行する
-上記はWildFlyをバックグランドで実行するため、起動の失敗や接続トラブルがあった場合、コンテナに接続しログを見る
+#### WildFlyをフォアグラウンドで実行する
+上記はWildFlyをバックグラウンドで実行するため、起動の失敗や接続トラブルがあった場合、コンテナに接続しログを見る
 必要があります。次のコマンドで実行すると起動状態がターミナルに流れます。  
 
     docker run --rm --link dolphin-db:ds -p 8080:8080 -it dolphindev/wildfly
@@ -82,9 +88,10 @@ Postgresを起動 -> WildFlyを起動
 
 ***********************
 
-#### 既存Postgresサーバーと接続する
+#### 既存の Postgres サーバーと接続する
 既にOpenDolphinを運用していてPostgresサーバーにデータがある場合、WildFly
 コンテナとPostgresを直接接続することができます。
+
 * データのバックアップをとってください。
 * Postgresのバージョンを最新にしてください。（pg_dump, pg_restore等の決められた手順を実行してください。）
 * PostgresサーバーのIPアドレスを pg_server_ip とします。またポートはデフォルトの5432とします。
